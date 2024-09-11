@@ -1,7 +1,29 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, Alert } from "react-native";
 import Primarybutton from "../Components/Primarybutton";
+import { useState } from "react";
 
-const StartScreen = () => {
+const StartScreen = ({ onPickedNumber }) => {
+  const [enteredNumber, setEnteredNumber] = useState("");
+  function handleEnteredNumber(enteredValue) {
+    setEnteredNumber(enteredValue);
+  }
+  function resetInputHandler() {
+    setEnteredNumber("");
+  }
+  function handleConfirmButton() {
+    const EnteredNumber = parseInt(enteredNumber);
+
+    if (isNaN(EnteredNumber) || EnteredNumber <= 0 || EnteredNumber > 99) {
+      Alert.alert(
+        "invalid Number",
+        "the number that entered must be between the 1 and 99",
+        [{ text: "okay", style: "destructive", onPress: resetInputHandler }]
+      );
+      return;
+    }
+    onPickedNumber(EnteredNumber);
+  }
+
   return (
     <View style={styles.main}>
       <View style={styles.InputContainer}>
@@ -9,10 +31,18 @@ const StartScreen = () => {
           style={styles.NumberInput}
           maxLength={2}
           keyboardType="number-pad"
+          value={enteredNumber}
+          onChangeText={handleEnteredNumber}
         />
       </View>
-      <Primarybutton>Confirm</Primarybutton>
-      <Primarybutton>Reset</Primarybutton>
+      <View style={styles.ButtonsContainer}>
+        <View style={styles.Buttons}>
+          <Primarybutton onPress={resetInputHandler}>Reset</Primarybutton>
+        </View>
+        <View style={styles.Buttons}>
+          <Primarybutton onPress={handleConfirmButton}>Confirm</Primarybutton>
+        </View>
+      </View>
     </View>
   );
 };
@@ -20,12 +50,14 @@ export default StartScreen;
 
 const styles = StyleSheet.create({
   main: {
-    backgroundColor: "#72063c",
+    backgroundColor: "#3b021f",
     padding: 20,
     marginHorizontal: 25,
     marginTop: 100,
     borderRadius: 12,
     elevation: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
   NumberInput: {
     height: 30,
@@ -37,9 +69,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 10,
   },
-  InputContainer:{
-    flex:3,
-    alignItems:"center",
-    justifyContent:"center"
-  }
+  ButtonsContainer: {
+    flexDirection: "row",
+  },
+  Buttons: {
+    flex: 1,
+  },
 });
