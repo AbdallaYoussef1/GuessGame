@@ -3,6 +3,8 @@ import StartScreen from "./Screens/StartScreen";
 import MainScreen from "./Screens/MainScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
+import Colors from "./Constants/Colors";
+
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
@@ -16,7 +18,10 @@ export default function App() {
     screen = <MainScreen />;
   }
   return (
-    <LinearGradient colors={["#72063c", "#ebc85d"]} style={styles.RootScreen}>
+    <LinearGradient
+      colors={[Colors.primary600, Colors.primary500]}
+      style={styles.RootScreen}
+    >
       <ImageBackground
         style={styles.RootScreen}
         resizeMode="cover"
