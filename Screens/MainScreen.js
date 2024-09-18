@@ -1,8 +1,12 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import Title from "../Components/UI/Title";
 import { useEffect, useState } from "react";
 import NumberContainer from "../Components/Game/NumberContainer";
 import Primarybutton from "../Components/UI/Primarybutton";
+import Card from "../Components/UI/Card";
+import HeaderInstruction from "../Components/UI/HeaderInstruction";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Colors from "../Constants/Colors";
 
 function GenerateRandomNumber(min, max, exclude) {
   const RNDNum = Math.floor(Math.random() * (max - min) + min);
@@ -53,14 +57,21 @@ const MainScreen = ({ CheckedNumber, GameIsOver }) => {
     <View style={styles.main}>
       <Title>Opponent's Guessing</Title>
       <NumberContainer>{CurrentGuess}</NumberContainer>
-      <View>
-        <Primarybutton onPress={NextGuessHandler.bind(this, "Lower")}>
-          -
-        </Primarybutton>
-        <Primarybutton onPress={NextGuessHandler.bind(this, "Higher")}>
-          +
-        </Primarybutton>
-      </View>
+      <Card>
+        <HeaderInstruction>Expect Higher or lower</HeaderInstruction>
+        <View style={styles.ButtonsContainer}>
+          <View style={styles.Buttons}>
+            <Primarybutton onPress={NextGuessHandler.bind(this, "Lower")}>
+              <AntDesign name="minuscircleo" size={24} color={Colors.primary100} />
+            </Primarybutton>
+          </View>
+          <View style={styles.Buttons}>
+            <Primarybutton onPress={NextGuessHandler.bind(this, "Higher")}>
+              <AntDesign name="pluscircleo" size={24} color={Colors.primary100} />
+            </Primarybutton>
+          </View>
+        </View>
+      </Card>
     </View>
   );
 };
@@ -71,5 +82,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 40,
     paddingTop: 60,
+  },
+  ButtonsContainer: {
+    flexDirection: "row",
+  },
+  Buttons: {
+    flex: 1,
   },
 });

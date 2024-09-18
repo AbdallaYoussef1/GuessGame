@@ -1,8 +1,10 @@
-import { StyleSheet, TextInput, View, Alert } from "react-native";
+import { StyleSheet, TextInput, View, Alert} from "react-native";
 import Primarybutton from "../Components/UI/Primarybutton";
 import { useState } from "react";
 import Colors from "../Constants/Colors";
-
+import Title from "../Components/UI/Title";
+import Card from "../Components/UI/Card";
+import HeaderInstruction from "../Components/UI/HeaderInstruction";
 
 const StartScreen = ({ onPickedNumber }) => {
   const [enteredNumber, setEnteredNumber] = useState("");
@@ -27,38 +29,37 @@ const StartScreen = ({ onPickedNumber }) => {
   }
 
   return (
-    <View style={styles.main}>
-      <View style={styles.InputContainer}>
-        <TextInput
-          style={styles.NumberInput}
-          maxLength={2}
-          keyboardType="number-pad"
-          value={enteredNumber}
-          onChangeText={handleEnteredNumber}
-        />
-      </View>
-      <View style={styles.ButtonsContainer}>
-        <View style={styles.Buttons}>
-          <Primarybutton onPress={resetInputHandler}>Reset</Primarybutton>
+    <View style={styles.rootView}>
+      <Title style={styles.TitleText}>Guess the number</Title>
+      <Card>
+        <HeaderInstruction style={styles.text}>Please Enter A number</HeaderInstruction>
+        <View>
+          <TextInput
+            style={styles.NumberInput}
+            maxLength={2}
+            keyboardType="number-pad"
+            value={enteredNumber}
+            onChangeText={handleEnteredNumber}
+          />
         </View>
-        <View style={styles.Buttons}>
-          <Primarybutton onPress={handleConfirmButton}>Confirm</Primarybutton>
+        <View style={styles.ButtonsContainer}>
+          <View style={styles.Buttons}>
+            <Primarybutton onPress={resetInputHandler}>Reset</Primarybutton>
+          </View>
+          <View style={styles.Buttons}>
+            <Primarybutton onPress={handleConfirmButton}>Confirm</Primarybutton>
+          </View>
         </View>
-      </View>
+      </Card>
     </View>
   );
 };
 export default StartScreen;
 
 const styles = StyleSheet.create({
-  main: {
-    backgroundColor: Colors.primary400,
-    padding: 20,
-    marginHorizontal: 25,
+  rootView: {
     marginTop: 100,
-    borderRadius: 12,
-    elevation: 10,
-    justifyContent: "center",
+    flex: 1,
     alignItems: "center",
   },
   NumberInput: {
